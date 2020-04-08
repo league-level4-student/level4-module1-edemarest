@@ -40,23 +40,27 @@ public class Snake {
 		int newY = 0;
 		switch(currentDirection) {
 		case RIGHT:
-			newX = head.getLocation().x+1;
+			newX+=1;
+			break;
 		case LEFT:
-			newX = head.getLocation().x-1;
+			newX-=1;
+			break;
 		case DOWN:
-			newY = head.getLocation().y-1;
+			newY+=1;
+			break;
 		case UP:
-			newY = head.getLocation().y+1;
+			newY-=1;
+			break;
 		}
 		//2. Iterate through the SnakeSegments in reverse order
 		//2a. Update each snake segment to the location of the segment 
 		//    in front of it.
-		for(int i = snake.size(); i <= 0; i--) {
+		for(int i = snake.size()-1; i > 0; i--) {
 			snake.get(i).setLocation(snake.get(i-1).getLocation());
 		}
 		
 		//3. set the location of the head to the new location calculated in step 1
-		head.setLocation(new Location(newX, newY));
+		head.setLocation(new Location(head.getLocation().x+newX, head.getLocation().y+newY));
 
 		//4. set canMove to true
 		canMove=true;
@@ -100,7 +104,6 @@ public class Snake {
 		//   in the same location as any other body segment
 		for(int i = 0; i < snake.size(); i++) {
 			if(snake.get(i).getLocation().equals(head.getLocation())) {
-				System.out.println("Head colliding w body");
 				return false;
 			}
 		}
